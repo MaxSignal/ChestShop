@@ -8,6 +8,7 @@ use pocketmine\event\Listener;
 use pocketmine\block\Block;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\item\Item;
+use pocketmine\item\ItemFactory;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\tile\Chest as TileChest;
@@ -163,8 +164,8 @@ class EventListener implements Listener
         $saleNum = $event->getLine(1);
         $price = $event->getLine(2);
         $productData = explode(":", $event->getLine(3));
-        $pID = $this->isItem($id = array_shift($productData)) ? $id : false;
-        $pMeta = ($meta = array_shift($productData)) ? $meta : 0;
+        $pID = $this->isItem($id = array_shift($productData)) ? (int)$id : false;
+		$pMeta = ($meta = array_shift($productData)) ? (int)$meta : 0;
 
         $sign = $event->getBlock();
 
@@ -186,21 +187,21 @@ class EventListener implements Listener
 
     private function getSideChest(Position $pos)
     {
-        $block = $pos->getLevel()->getBlock(new Vector3($pos->getX() + 1, $pos->getY(), $pos->getZ()));
-        if ($block->getID() === Block::CHEST) return $block;
-        $block = $pos->getLevel()->getBlock(new Vector3($pos->getX() - 1, $pos->getY(), $pos->getZ()));
-        if ($block->getID() === Block::CHEST) return $block;
-        $block = $pos->getLevel()->getBlock(new Vector3($pos->getX(), $pos->getY(), $pos->getZ() + 1));
-        if ($block->getID() === Block::CHEST) return $block;
-        $block = $pos->getLevel()->getBlock(new Vector3($pos->getX(), $pos->getY(), $pos->getZ() - 1));
-        if ($block->getID() === Block::CHEST) return $block;
-        return false;
+		$block = $pos->getLevel()->getBlock(new Vector3($pos->getX() + 1, $pos->getY(), $pos->getZ()));
+		if ($block->getID() === Block::CHEST) return $block;
+		$block = $pos->getLevel()->getBlock(new Vector3($pos->getX() - 1, $pos->getY(), $pos->getZ()));
+		if ($block->getID() === Block::CHEST) return $block;
+		$block = $pos->getLevel()->getBlock(new Vector3($pos->getX(), $pos->getY() - 1, $pos->getZ()));
+		if ($block->getID() === Block::CHEST) return $block;
+		$block = $pos->getLevel()->getBlock(new Vector3($pos->getX(), $pos->getY(), $pos->getZ() + 1));
+		if ($block->getID() === Block::CHEST) return $block;
+		$block = $pos->getLevel()->getBlock(new Vector3($pos->getX(), $pos->getY(), $pos->getZ() - 1));
+		if ($block->getID() === Block::CHEST) return $block;
+		return false;
     }
 
     private function isItem($id)
     {
-        if (isset(Item::$list[$id])) return true;
-        if (isset(Block::$list[$id])) return true;
-        return false;
+		return ItemFactory::isRegistered((int) $id);
     }
 } 
