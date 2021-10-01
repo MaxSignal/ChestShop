@@ -109,7 +109,7 @@ class EventListener implements Listener
                 ]);
                 if ($shopInfo !== false && $shopInfo['shopOwner'] !== $player->getName()) {
                     $player->sendMessage("This chest has been protected!");
-                    $event->setCancelled();
+                    $event->cancel();
                 }
                 break;
 
@@ -135,7 +135,7 @@ class EventListener implements Listener
                 if ($shopInfo !== false) {
                     if ($shopInfo['shopOwner'] !== $player->getName()) {
                         $player->sendMessage("This sign has been protected!");
-                        $event->setCancelled();
+                        $event->cancel();
                     } else {
                         $this->databaseManager->deleteByCondition($condition);
                         $player->sendMessage("Closed your ChestShop");
@@ -153,7 +153,7 @@ class EventListener implements Listener
                 if ($shopInfo !== false) {
                     if ($shopInfo['shopOwner'] !== $player->getName()) {
                         $player->sendMessage("This chest has been protected!");
-                        $event->setCancelled();
+                        $event->cancel();
                     } else {
                         $this->databaseManager->deleteByCondition($condition);
                         $player->sendMessage("Closed your ChestShop");
