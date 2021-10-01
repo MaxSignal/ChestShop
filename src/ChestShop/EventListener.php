@@ -180,7 +180,7 @@ class EventListener implements Listener
         $event->setLine(0, $shopOwner);
         $event->setLine(1, "Amount:$saleNum");
         $event->setLine(2, "Price:$price");
-        $event->setLine(3, "$productName:$pMeta");
+        $event->setLine(3, "$productName:[$pID:$pMeta]");
 
         $this->databaseManager->registerShop($shopOwner, $saleNum, $price, $pID, $pMeta, $sign, $chest);
     }
