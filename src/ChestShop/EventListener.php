@@ -55,7 +55,7 @@ class EventListener implements Listener
                 $itemNum = 0;
                 $pID = $shopInfo['productID'];
                 $pMeta = $shopInfo['productMeta'];
-                for ($i = 0; $i < $chest->getSize(); $i++) {
+                for ($i = 0; $i < $this->getSize(); $i++) {
                     $item = $chest->getInventory()->getItem($i);
                     // use getDamage() method to get metadata of item
                     if ($item->getID() === $pID and $item->getDamage() === $pMeta) $itemNum += $item->getCount();
@@ -72,7 +72,7 @@ class EventListener implements Listener
                 $player->getInventory()->addItem(clone Item::get((int)$shopInfo['productID'], (int)$shopInfo['productMeta'], (int)$shopInfo['saleNum']));
 
                 $tmpNum = $shopInfo['saleNum'];
-                for ($i = 0; $i < $chest->getSize(); $i++) {
+                for ($i = 0; $i < $this->getSize(); $i++) {
                     $item = $chest->getInventory()->getItem($i);
                     // Use getDamage() method to get metadata of item
                     if ($item->getID() === $pID and $item->getDamage() === $pMeta) {
@@ -204,4 +204,9 @@ class EventListener implements Listener
     {
 		return ItemFactory::isRegistered((int) $id);
     }
+
+    public function getSize()
+    {
+		return 27;
+	}
 } 
