@@ -8,17 +8,17 @@ use pocketmine\command\CommandSender;
 
 class ChestShop extends PluginBase
 {
-    public function onLoad()
+    public function onLoad(): void
     {
     }
 
-    public function onEnable()
+    public function onEnable(): void
     {
         if (!file_exists($this->getDataFolder())) @mkdir($this->getDataFolder());
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this, new DatabaseManager($this->getDataFolder() . 'ChestShop.sqlite3')), $this);
     }
 
-    public function onDisable()
+    public function onDisable(): void
     {
     }
 

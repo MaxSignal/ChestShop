@@ -3,6 +3,7 @@
 namespace ChestShop;
 
 use pocketmine\block\Block;
+use pocketmine\world\Position;
 
 class DatabaseManager
 {
@@ -40,12 +41,14 @@ class DatabaseManager
      * @param int $productID
      * @param int $productMeta
      * @param Block $sign
-     * @param Block $chest
+     * @param int $chestX
+     * @param int $chestY
+     * @param int $chestZ
      * @return bool
      */
-    public function registerShop($shopOwner, $saleNum, $price, $productID, $productMeta, $sign, $chest)
+    public function registerShop($shopOwner, $saleNum, $price, $productID, $productMeta, $sign, $chestX, $chestY, $chestZ)
     {
-        return $this->database->exec("INSERT INTO ChestShop (shopOwner, saleNum, price, productID, productMeta, signX, signY, signZ, chestX, chestY, chestZ) VALUES ('$shopOwner', $saleNum, $price, $productID, $productMeta, $sign->x, $sign->y, $sign->z, $chest->x, $chest->y, $chest->z)");
+        return $this->database->exec("INSERT OR REPLACE INTO ChestShop (id, shopOwner, saleNum, price, productID, productMeta, signX, signY, signZ, chestX, chestY, chestZ) VALUES ((SELECT id FROM ChestShop WHERE signX = $sign->x AND signY = $sign->y AND signZ = $sign->z),'$shopOwner', $saleNum, $price, $productID, $productMeta, $sign->x, $sign->y, $sign->z, $chestX, $chestY, $chestZ)");
     }
 
     /**
@@ -61,7 +64,7 @@ class DatabaseManager
     /**
      * @param array $condition
      * @return bool
-     */
+     */ 
     public function deleteByCondition(array $condition)
     {
         $where = $this->formatCondition($condition);

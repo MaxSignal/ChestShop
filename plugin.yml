@@ -1,7 +1,7 @@
 name: ChestShop
 main: ChestShop\ChestShop
-version: 2.0.2
-api: [3.0.0]
+version: 2.0.3dev2
+api: [4.0.0]
 load: POSTWORLD
 author: MinecrafterJPN
 authors: [MinecrafterJPN]
@@ -19,17 +19,12 @@ commands:
   usage: "Usage: /remove <username>"
   permission: chestshop.command.remove
 permissions:
- chestshop:
-  default: op
-  description: "Allows using all the ChestShop things"
-  children:
-   chestshop.command:
+  chestshop.command:
     default: op
     description: "Allows using all the PocketMoney commands"
-    children:
-     chestshop.command.id:
-      default: true
-      description: "Allows searching item ID"
-     chestshop.command.remove:
-      default: op
-      description: "Allows removing player's ChestShop"
+  chestshop.command.id:
+    default: true
+    description: "Allows searching item ID"
+  chestshop.command.remove:
+    default: op
+    description: "Allows removing player's ChestShop"
